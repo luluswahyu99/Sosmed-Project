@@ -9,6 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    get formateDate() {
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      };
+      const date = this.bornDate.toLocaleString('id-ID', options).replace(/\//g, '-')
+    return date.split('-').reverse().join('-')
+    }
+
     static associate(models) {
       // define association here
       Profile.belongsTo(models.User)

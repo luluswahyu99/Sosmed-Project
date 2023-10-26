@@ -1,12 +1,13 @@
+const Helper = require('../helper');
 const {Post, Tag, User, PostTag, Profile} = require('../models')
-const Sequelize = require('sequelize')
+const { Op } = require("sequelize");
 
 class Controller{
     static async post(req, res) {
-        const {id} = req.session.user
+        const {id, username} = req.session.user
         try {
             const {error} = req.query
-            res.render('post', {error, id})
+            res.render('post', {error, id, username})
         } catch (error) {
             res.send(error.message)
         }
@@ -42,10 +43,25 @@ class Controller{
     static async home(req, res) {
         const {id, username, role} = req.session.user
         // console.log(res.session)
-        console.log(req.session.user)
+        // console.log(req.session.user)
         try {
-            const data = await Post.findAll({include: Tag})
+            const {tag} = req.query
+            let data
+            if (tag) {
+                data = await Post.findAll({include: {
+                    model: Tag,
+                    where: {
+                        name : {
+                            [Op.iLike]: `%${tag}%`
+                        }
+                    }
+                }})
+            } else {
+                data = await Post.findAll({include: Tag})
+            }
             res.render('home', {data, id, username, role})
+            // res.send(data)
+            // console.log(data)
         } catch (error) {
             res.send(error.message)
         }
@@ -63,18 +79,24 @@ class Controller{
     static async profile(req, res) {
         try {
             const {username} = req.params
-            const data = await User.findAll({include: [{model: Post}, {model: Profile}] ,where:{username: username}})
-            res.send(data)
+            const dataProfile = await User.findAll({include: [{model: Profile},{model: Post, include: Tag}], where: {username: username}})
+            // const dataPost = await User.findAll({include:Post, where: {username: username}})
+            const data = dataProfile[0]
+            const fullName = Helper.fullName(data.Profile.firstName, data.Profile.lastName)
+            const posts = data.Posts
+            res.render('profile', {data, posts, fullName})
+            // console.log(data)
+            // res.send(data)
         } catch (error) {
             res.send(error.message)
         }
     }
 
     static async addProfile(req, res) {
-        const {id} = req.session.user
+        const {id, username} = req.session.user
         try {
             const {error} = req.query
-            res.render('add-profile', {error, id})
+            res.render('add-profile', {error, id, username})
         } catch (error) {
             res.send(error.message)
         }
@@ -85,10 +107,8 @@ class Controller{
         try {
 
 
-            const {firstName, lastName, bornDate, address, image} = req.body;
-            console.log(req.body,'<<<ini body')
+            const {firstName, lastName, bornDate, address} = req.body;
             let img = ''
-            console.log(req.file, "<<<ini file")
             if(req.file !== undefined) {
                 const image = req.file.path
                 let imgs = image.split('\\')
@@ -109,25 +129,59 @@ class Controller{
             res.send(error.message);
           }
         }
-      }
+    }
 
-      static async checkProfile(req, res, next) {
-        const { id } = req.session.user;
+    static async deletePost(req, res) {
         try {
-            const dataProfile = await Profile.findOne({
+            const {postId} = req.params
+            await Post.destroy({
                 where: {
-                    UserId: id
+                    id: postId
                 }
             })
-            if(dataProfile){
-                next()
-            }else{
-                res.redirect("/profileAdd")
-            }
         } catch (error) {
-            res.send(error.message);
+            res.send(error.message)
+        }
+    }
+
+    static async editProfile(req, res) {
+        try {
+            const {error} = req.query
+            const {username} = req.params
+            const data = await User.findAll({include: Profile, where: {username: username}})
+            res.render('edit-profile', {data, error})
+        } catch (error) {
+            res.send(error.message)
+        }
+    }
+
+    static async updateProfile(req, res) {
+        const {username} = req.params
+        try {
+            const {firstName, lastName, bornDate, address} = req.body;
+            
+            let img = ''
+            if(req.file !== undefined) {
+                const image = req.file.path
+                let imgs = image.split('\\')
+                img = imgs[1]
+                await Profile.update({firstName, lastName, bornDate, address, imgProfile: img}, {where: {username: +username}});
+            }
+            await Profile.update({firstName, lastName, bornDate, address}, {where: {username: +username}})
+            // console.log(img)
+            res.redirect('/home')
+        } catch (error) {
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map(el => {
+                  return el.message;
+                });
+                res.redirect(`/profile/${username}/edit?error=${err}`);
+              } else {
+                res.send(error.message);
+              }
         }
       }
+
 }
 
 module.exports = Controller

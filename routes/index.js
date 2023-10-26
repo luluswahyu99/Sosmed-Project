@@ -30,6 +30,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 const isProfile = (req, res, next) => {
+  console.log(req.session.user.profile === null || !req.session.user.profile, req.session.user)
   if(req.session.user.profile === null || !req.session.user.profile){
     res.redirect("/profileAdd")
   }else{
@@ -49,6 +50,9 @@ router.get('/:userId/post',isProfile , Controller.post)
 router.post('/:userId/post',isProfile , Controller.createPost)
 router.get('/post/:postId/like',isProfile , Controller.like)
 router.get('/profile/:username',isProfile , Controller.home)
+router.get('/post/:postId/delete',isProfile, Controller.deletePost)
+router.get('/profile/:username/edit',isProfile, Controller.editProfile)
+router.post('/profile/:username/edit')
 
 
 

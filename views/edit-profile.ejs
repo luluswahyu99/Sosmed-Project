@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+        crossorigin="anonymous">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Sosmed <span class="text-primary">Me</span></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/<%= data[0].id %>/post">Post</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/profile/<%= data[0].username %>">Profile</a>
+              </li>
+              <form class="d-flex" action="/logout">
+                <button class="btn btn-outline-success" type="submit">Logout</button>
+              </form>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container">
+        <ul class="text-danger">
+            <% if (error) { %>
+                <% error.split(',').forEach(el=> { %>
+                    <li>
+                        <%= el %>
+                    </li>
+                <% }) %>
+            <% } %>
+        </ul>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="mb-3 mt-3">
+                <label for="">firstName</label>
+                <input type="text" name="firstName" value="<%= data[0].Profile.firstName %>" class="form-control" placeholder="firstName...">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">lastName</label>
+                <input type="text" name="lastName" value="<%= data[0].Profile.lastName %>" class="form-control" placeholder="lastName...">
+            </div>
+            <div>
+                <label class="form-label" for="customFile">Upload Your Image</label>
+                <input type="file" name="image"  class="form-control" id="customFile" />
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">Born Date</label>
+                <input type="date" name="bornDate" value="<%= data[0].Profile.formateDate %>" class="form-control" placeholder="bornDate...">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">Adress</label>
+                <textarea class="form-control" value="<%= data[0].Profile.address %>" name="address" id="floatingTextarea"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary">
+        </form>
+            
+    </div>
+</body>
+</html>
