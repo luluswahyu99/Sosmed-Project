@@ -12,7 +12,16 @@
 <body>
     <div class="container">
         <h3>Home</h3>
-        <a class="btn btn-primary mb-3" href="/post">Post</a>
+
+        <% if (data.Profile === null){ %>
+            <div>
+                <form action="">
+                    
+                </form>
+            </div>
+        <% } %>
+
+
         <% data.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">

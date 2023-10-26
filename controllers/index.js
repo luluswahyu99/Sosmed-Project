@@ -1,4 +1,4 @@
-const {Post, Tag, User, PostTag} = require('../models')
+const {Post, Tag, User, PostTag, Profile} = require('../models')
 const Sequelize = require('sequelize')
 
 class Controller{
@@ -39,12 +39,12 @@ class Controller{
     }
 
     static async home(req, res) {
-        const {id} = req.session.user
+        const {id, username, role} = req.session.user
         // console.log(res.session)
         console.log(req.session.user)
         try {
             const data = await Post.findAll({include: Tag})
-            res.render('home', {data, id})
+            res.render('home', {data, id, username, role})
         } catch (error) {
             res.send(error.message)
         }
@@ -61,7 +61,9 @@ class Controller{
 
     static async profile(req, res) {
         try {
-            
+            const {username} = req.params
+            const data = await User.findAll({include: [{model: Post}, {model: Profile}] ,where:{username: username}})
+            res.send(data)
         } catch (error) {
             res.send(error.message)
         }
