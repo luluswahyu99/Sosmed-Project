@@ -40,10 +40,12 @@ class Controller{
     }
 
     static async home(req, res) {
-        const {id} = req.session.user
+        const {id, username, role} = req.session.user
+        // console.log(res.session)
+        console.log(req.session.user)
         try {
             const data = await Post.findAll({include: Tag})
-            res.render('home', {data, id})
+            res.render('home', {data, id, username, role})
         } catch (error) {
             res.send(error.message)
         }
@@ -60,7 +62,9 @@ class Controller{
 
     static async profile(req, res) {
         try {
-            
+            const {username} = req.params
+            const data = await User.findAll({include: [{model: Post}, {model: Profile}] ,where:{username: username}})
+            res.send(data)
         } catch (error) {
             res.send(error.message)
         }
@@ -79,25 +83,22 @@ class Controller{
     static async addProfileData(req, res) {
         const { id } = req.session.user;
         try {
-          const { firstName, lastName, bornDate, address } = req.body;
-          console.log(req.body);
-          let img = '';
-          console.log(req.file);
-          if (req.file !== undefined) {
-            const image = req.file.path;
-            let imgs = image.split('\\');
-            img = imgs[1];
-          }
-          console.log(img);
-          await Profile.create({
-            firstName,
-            lastName,
-            bornDate,
-            address,
-            imgProfile: img,
-            UserId: id,
-          });
-          res.redirect('/home');
+
+
+            const {firstName, lastName, bornDate, address, image} = req.body;
+            console.log(req.body,'<<<ini body')
+            let img = ''
+            console.log(req.file, "<<<ini file")
+            if(req.file !== undefined) {
+                const image = req.file.path
+                let imgs = image.split('\\')
+                img = imgs[1]
+            }
+            // console.log(img)
+            await Profile.create({firstName, lastName, bornDate, address, imgProfile: img, UserId: id});
+            res.redirect('/home')
+            
+
         } catch (error) {
           if (error.name === 'SequelizeValidationError') {
             const err = error.errors.map(el => {

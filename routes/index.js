@@ -43,11 +43,13 @@ router.get("/logout", ControllerLogin.logout)
 
 router.get("/profileAdd", Controller.addProfile)
 router.post("/profileAdd", Controller.addProfileData)
+
 router.get('/home',isProfile , Controller.home)
 router.get('/:userId/post',isProfile , Controller.post)
 router.post('/:userId/post',isProfile , Controller.createPost)
 router.get('/post/:postId/like',isProfile , Controller.like)
 router.get('/profile/:username',isProfile , Controller.home)
+
 
 
 
