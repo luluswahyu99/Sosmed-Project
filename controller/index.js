@@ -1,4 +1,5 @@
-const {User} = require("../models")
+const {User} = require("../models");
+const { use } = require("../routes");
 
 class Controller{
     static async createPost(req, res) {
@@ -30,8 +31,15 @@ class Controller{
     }
 
     static async loginVerification(req, res){
+        const {email, password} = req.body;
         try {
-            
+            const dataUser = await User.findOne({
+                where: {
+                    email: email,
+                    password: password
+                }
+            })
+            res.send("login berhasil")
         } catch (error) {
             console.log(error);
             res.send(error.message)
