@@ -11,6 +11,27 @@
     <title>Post</title>
 </head>
 <body>
-    
+    <%- include('./partials/navbar.ejs') %>
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            <div>
+                <label class="form-label" for="customFile">Upload Your Image</label>
+                <input type="file" name="image" class="form-control" id="customFile" />
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">Title</label>
+                <input type="text" name="title" class="form-control" placeholder="title...">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">Descrition</label>
+                <textarea class="form-control" name="description" id="floatingTextarea"></textarea>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">Tag</label>
+                <input type="text" name="tag" class="form-control" placeholder="#tag">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Post">
+        </form>
+    </div>
 </body>
 </html>

@@ -9,6 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static async cekTag(value) {
+      const find = await Tag.findAll({where: {name : value}})
+      if (find.length === 0) {
+        await Tag.create({name: value})
+      }
+    }
+
     static associate(models) {
       // define association here
       Tag.belongsToMany(models.Post, {
