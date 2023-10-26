@@ -1,6 +1,7 @@
 const {User} = require("../models")
 const bcrypt = require('bcryptjs')
-class Controller{
+
+class ControllerLogin{
     static async createPost(req, res) {
         try {
             res.render('post')
@@ -22,9 +23,8 @@ class Controller{
         const {username, email, password} = req.body;
         
         try {
-            const dataUser = await User.create({username, email, password})
-            res.send("Login berhasil")
-            // res.redirect(`/login`)
+            await User.create({username, email, password})
+            res.redirect(`/login`)
         } catch (error) {
             if(error.name === "SequelizeValidationError"){
                 const errors = error.errors.map(item => {
@@ -57,7 +57,7 @@ class Controller{
 
             if(verifPassword) {
                 req.session.user = {id: account.id, role: account.role}
-                res.redirect("/test")
+                res.redirect("/home")
             }else {
                 return res.redirect(`/login?msg=${msg}`);
             }
@@ -69,4 +69,4 @@ class Controller{
     }
 }
 
-module.exports = Controller
+module.exports = ControllerLogin

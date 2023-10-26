@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Post)
     }
   }
+  
   User.init({
     username: {
       type: DataTypes.STRING,

@@ -9,6 +9,7 @@ module.exports = {
       el.updatedAt = new Date()
       return el
     })
+    
 
     /**
      * Add seed commands here.

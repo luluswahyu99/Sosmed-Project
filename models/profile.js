@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User)
     }
   }
+  
   Profile.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
