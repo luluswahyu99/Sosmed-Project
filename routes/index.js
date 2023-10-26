@@ -15,6 +15,7 @@ const validateLogin = (req, res, next) => {
     next()
   }
 }
+
 router.get('/register',validateLogin, ControllerLogin.registerForm);
 router.post('/register',validateLogin, ControllerLogin.registerAuth);
 router.get('/login',validateLogin, ControllerLogin.loginForm);
@@ -30,6 +31,8 @@ const isLoggedIn = (req, res, next) => {
 
 router.use(isLoggedIn)
 
+router.get("/profileAdd", Controller.addProfile)
+router.post("/profileAdd", Controller.addProfileData)
 router.get('/home', Controller.home)
 router.get('/:userId/post', Controller.post)
 router.post('/:userId/post', Controller.createPost)

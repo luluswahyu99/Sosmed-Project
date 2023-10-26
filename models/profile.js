@@ -14,13 +14,76 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User)
     }
   }
-  
+
   Profile.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    bornDate: DataTypes.DATE,
-    address: DataTypes.STRING,
-    imgProfile: DataTypes.STRING
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Masukkan nama awal anda'
+        },
+        notNull: {
+          msg: 'Masukkan nama awal anda'
+        }
+      },
+      
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Masukkan nama akhir anda'
+        },
+        notNull: {
+          msg: 'Masukkan nama akhir anda'
+        }
+      },
+      
+    },
+    bornDate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Masukkan tanggal lahir'
+        },
+        notNull: {
+          msg: 'Masukkan tanggal lahir'
+        }
+      },
+      
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Masukkan Alamat anda'
+        },
+        notNull: {
+          msg: 'Masukkan Alamat anda'
+        }
+      },
+      
+    },
+    imgProfile: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Masukkan foto Profile'
+        },
+        notNull: {
+          msg: 'Masukkan foto Profile'
+        }
+      },
+      
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+    }
   }, {
     sequelize,
     modelName: 'Profile',
