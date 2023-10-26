@@ -48,10 +48,10 @@ router.get('/home',isProfile , Controller.home)
 router.get('/:userId/post',isProfile , Controller.post)
 router.post('/:userId/post',isProfile , Controller.createPost)
 router.get('/post/:postId/like',isProfile , Controller.like)
-router.get('/profile/:username',isProfile , Controller.home)
+router.get('/profile/:username',isProfile , Controller.profile)
 router.get('/post/:postId/delete',isProfile, Controller.deletePost)
-router.get('/profile/:username/edit',isProfile, Controller.editProfile)
-router.post('/profile/:username/edit')
+router.get('/profile/:username/edit/:profileId',isProfile, Controller.editProfile)
+router.post('/profile/:username/edit/:profileId', isProfile, Controller.updateProfile)
 
 
 

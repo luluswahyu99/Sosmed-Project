@@ -40,7 +40,7 @@
         <p>Address: <%= data.Profile.address %></p>
         <p>Day Birth: <%= data.Profile.formateDate %></p>
 
-        <a href="/profile/<%= data.id %>/edit">Edit</a>
+        <a href="/profile/<%= data.username %>/edit/<%= data.Profile.id %>">Edit</a>
 
         <% posts.forEach(element=> { %>
             <div class="card" style="width: 20rem;">

@@ -148,7 +148,9 @@ class Controller{
         try {
             const {error} = req.query
             const {username} = req.params
+            // console.log(username)
             const data = await User.findAll({include: Profile, where: {username: username}})
+            // res.send(data)
             res.render('edit-profile', {data, error})
         } catch (error) {
             res.send(error.message)
@@ -156,7 +158,7 @@ class Controller{
     }
 
     static async updateProfile(req, res) {
-        const {username} = req.params
+        const {profileId, username} = req.params
         try {
             const {firstName, lastName, bornDate, address} = req.body;
             
@@ -165,11 +167,11 @@ class Controller{
                 const image = req.file.path
                 let imgs = image.split('\\')
                 img = imgs[1]
-                await Profile.update({firstName, lastName, bornDate, address, imgProfile: img}, {where: {username: +username}});
+                await Profile.update({firstName, lastName, bornDate, address, imgProfile: img}, {where: {id: +profileId}});
             }
-            await Profile.update({firstName, lastName, bornDate, address}, {where: {username: +username}})
+            await Profile.update({firstName, lastName, bornDate, address}, {where: {id: +profileId}})
             // console.log(img)
-            res.redirect('/home')
+            res.redirect(`/profile/${username}`)
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
                 const err = error.errors.map(el => {
