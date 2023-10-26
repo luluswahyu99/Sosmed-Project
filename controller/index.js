@@ -1,6 +1,5 @@
-const {User} = require("../models");
-const { use } = require("../routes");
-
+const {User} = require("../models")
+const bcrypt = require('bcryptjs')
 class Controller{
     static async createPost(req, res) {
         try {
@@ -19,7 +18,7 @@ class Controller{
         try {
             const dataUser = await User.create({username, email, password})
             res.send("Login berhasil")
-            // res.redirect(`/userProfile/add?id=${dataUser.id}`)
+            // res.redirect(`/login`)
         } catch (error) {
             console.log(error);
             res.send(error.message)
@@ -31,14 +30,15 @@ class Controller{
     }
 
     static async loginVerification(req, res){
-        const {email, password} = req.body;
+        const {username, password} = req.body;
         try {
-            const dataUser = await User.findOne({
+            const verifUsername = await User.findOne({
                 where: {
-                    email: email,
-                    password: password
+                    username: username,
                 }
             })
+            if(!verifUsername) res.send("Username atau password salah");
+            const verifPassword = bcrypt.compareSync(password, verifUsername.password)
             res.send("login berhasil")
         } catch (error) {
             console.log(error);
