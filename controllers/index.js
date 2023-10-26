@@ -77,32 +77,38 @@ class Controller{
     }
 
     static async addProfileData(req, res) {
-        const {id} = req.session.user
+        const { id } = req.session.user;
         try {
-            const {firstName, lastName, bornDate, address} = req.body;
-            console.log(req.body)
-            let img = ''
-            console.log(req.file)
-            if(req.file !== undefined) {
-                const image = req.file.path
-                let imgs = image.split('\\')
-                img = imgs[1]
-            }
-            console.log(img)
-            await Profile.create({firstName, lastName, bornDate, address, imgProfile: img, UserId: id});
-            res.redirect('/home')
-            
+          const { firstName, lastName, bornDate, address } = req.body;
+          console.log(req.body);
+          let img = '';
+          console.log(req.file);
+          if (req.file !== undefined) {
+            const image = req.file.path;
+            let imgs = image.split('\\');
+            img = imgs[1];
+          }
+          console.log(img);
+          await Profile.create({
+            firstName,
+            lastName,
+            bornDate,
+            address,
+            imgProfile: img,
+            UserId: id,
+          });
+          res.redirect('/home');
         } catch (error) {
-            if (error.name === 'SequelizeValidationError') {
-                const err = error.errors.map(el => {
-                    return el.message
-                }) 
-                res.redirect(`/profileAdd?error=${err}`)
-            } else {
-                res.send(error.message)
-            }
+          if (error.name === 'SequelizeValidationError') {
+            const err = error.errors.map(el => {
+              return el.message;
+            });
+            res.redirect(`/profileAdd?error=${err}`);
+          } else {
+            res.send(error.message);
+          }
         }
-    }
+      }
 }
 
 module.exports = Controller
