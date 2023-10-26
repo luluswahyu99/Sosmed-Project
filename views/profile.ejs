@@ -11,18 +11,38 @@
 
 <body>
     <div class="container">
-        <h3>Home</h3>
-
-        <% if (data.Profile === null){ %>
-            <div>
-                <form action="">
-                    
-                </form>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Sosmed <span class="text-primary">Me</span></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/<%= data.id %>/post">Post</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/profile/<%= data.username %>">Profile</a>
+                  </li>
+                  <span class="nav-item">
+                    <a class="nav-link" href="/post">Log Out</a>
+                  </span>
+                </ul>
+              </div>
             </div>
-        <% } %>
+          </nav>
+        <img src="<%= data.Profile.imgProfile %>" class="rounded-circle" style="width: 150px;" alt="Avatar" />
+        <h5><%= fullName %></h5>
+        <p>Address: <%= data.Profile.address %></p>
+        <p>Day Birth: <%= data.Profile.formateDate %></p>
 
+        <a href="/profile/<%= data.id %>/edit">Edit</a>
 
-        <% data.forEach(element=> { %>
+        <% posts.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
                 <div class="card-body">
@@ -42,7 +62,7 @@
                             <%= element.like %>
                         </span>
                     </div>
-                    <a href="">Delete Post</a>
+                    <a href="/post/<%= element.id %>/delete">Delete Post</a>
                 </div>
             </div>
             <% }); %>

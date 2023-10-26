@@ -24,6 +24,7 @@ const fileFilter = (req, file, cb) => {
 }
 
 app.use('/home/', express.static(path.join(__dirname, 'images')))
+app.use('/profile/:username/', express.static(path.join(__dirname, 'images')))
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
