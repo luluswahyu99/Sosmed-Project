@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: "username is required"
         },
+        async isUnique(value) {
+          const dataUser = await User.findOne({
+            where:{
+              username: value
+            }
+          })
+          if(dataUser){
+              throw new Error(`username ${value} sudah terdaftar silahkan login`)
+          }
+        },
       }
     },
     password: {
@@ -57,6 +67,16 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           msg: "email must have @"
         },
+        async isUnique(value) {
+          const dataUser = await User.findOne({
+            where:{
+              email: value
+            }
+          })
+          if(dataUser){
+              throw new Error(`email ${email} sudah terdaftar silahkan login`)
+          }
+        }
       }
     },
     role: {
