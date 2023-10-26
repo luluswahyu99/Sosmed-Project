@@ -31,6 +31,10 @@
               <div class="card-body py-5 px-md-5">
                 <form action="/login" method="POST">
 
+                  <% if (msg) { %>
+                    <h7 style="color: red;"><%= msg %></h7>
+                   <% } %>
+
                   <div class="form-outline mb-4">
                     <input type="text" id="form3Example3" class="form-control" name="username"/>
                     <label class="form-label" for="form3Example3" name="username">Username</label>
