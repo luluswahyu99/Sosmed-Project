@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Isi dulu deskripsinya masseee '
         },
-        notEmpty: {
+        notNull: {
           msg:'Jangan dikosongin dong deskripsinya'
         }
       }
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Upload foto bang'
         }, 
-        notEmpty: {
+        notNull: {
           msg:'Jangan dikosongin dong fotonya'
         }
       }
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: 'Anda Siapa?'
       },
-      notEmpty: {
+      notNull: {
         msg: 'Sampean siapa?'
       }
     }
