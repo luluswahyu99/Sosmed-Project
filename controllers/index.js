@@ -107,10 +107,8 @@ class Controller{
         try {
 
 
-            const {firstName, lastName, bornDate, address, image} = req.body;
-            console.log(req.body,'<<<ini body')
+            const {firstName, lastName, bornDate, address} = req.body;
             let img = ''
-            console.log(req.file, "<<<ini file")
             if(req.file !== undefined) {
                 const image = req.file.path
                 let imgs = image.split('\\')
@@ -143,6 +141,44 @@ class Controller{
             })
         } catch (error) {
             res.send(error.message)
+        }
+    }
+
+    static async editProfile(req, res) {
+        try {
+            const {error} = req.query
+            const {username} = req.params
+            const data = await User.findAll({include: Profile, where: {username: username}})
+            res.render('edit-profile', {data, error})
+        } catch (error) {
+            res.send(error.message)
+        }
+    }
+
+    static async updateProfile(req, res) {
+        const {username} = req.params
+        try {
+            const {firstName, lastName, bornDate, address} = req.body;
+            
+            let img = ''
+            if(req.file !== undefined) {
+                const image = req.file.path
+                let imgs = image.split('\\')
+                img = imgs[1]
+                await Profile.update({firstName, lastName, bornDate, address, imgProfile: img}, {where: {username: +username}});
+            }
+            await Profile.update({firstName, lastName, bornDate, address}, {where: {username: +username}})
+            // console.log(img)
+            res.redirect('/home')
+        } catch (error) {
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map(el => {
+                  return el.message;
+                });
+                res.redirect(`/profile/${username}/edit?error=${err}`);
+              } else {
+                res.send(error.message);
+              }
         }
     }
 }

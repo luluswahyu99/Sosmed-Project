@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/<%= data.id %>/post">Post</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="//profile/<%= data.username %>">Profile</a>
+                    <a class="nav-link active" aria-current="page" href="/profile/<%= data.username %>">Profile</a>
                   </li>
                   <span class="nav-item">
                     <a class="nav-link" href="/post">Log Out</a>
@@ -39,6 +39,8 @@
         <h5><%= fullName %></h5>
         <p>Address: <%= data.Profile.address %></p>
         <p>Day Birth: <%= data.Profile.formateDate %></p>
+
+        <a href="/profile/<%= data.id %>/edit">Edit</a>
 
         <% posts.forEach(element=> { %>
             <div class="card" style="width: 20rem;">

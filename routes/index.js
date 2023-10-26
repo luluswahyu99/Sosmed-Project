@@ -39,6 +39,8 @@ router.post('/:userId/post', Controller.createPost)
 router.get('/post/:postId/like', Controller.like)
 router.get('/profile/:username', Controller.profile)
 router.get('/post/:postId/delete', Controller.deletePost)
+router.get('/profile/:username/edit', Controller.editProfile)
+router.post('/profile/:username/edit')
 
 
 
