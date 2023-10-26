@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Post)
     }
   }
-  
+
   User.init({
     username: {
       type: DataTypes.STRING,
@@ -68,7 +68,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeCreate(instance => {
+    if(!instance.role){
       instance.role = "User";
+    }
+      
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(instance.password, salt);
       instance.password = hash;
