@@ -19,11 +19,53 @@ module.exports = (sequelize, DataTypes) => {
   }
   
   Post.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    imgUrl: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Isi title dulu'
+        },
+        notNull: {
+          msg: 'title Jangan dikosongin dong'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Isi dulu deskripsinya masseee '
+        },
+        notEmpty: {
+          msg:'Jangan dikosongin dong deskripsinya'
+        }
+      }
+    },
+    imgUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Upload foto bang'
+        }, 
+        notEmpty: {
+          msg:'Jangan dikosongin dong fotonya'
+        }
+      }
+    },
     like: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: 'Anda Siapa?'
+      },
+      notEmpty: {
+        msg: 'Sampean siapa?'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Post',
