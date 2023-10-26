@@ -10,11 +10,33 @@
 </head>
 
 <body>
-    <%- include('./partials/navbar.ejs') %>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Sosmed <span class="text-primary">Me</span></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/<%= id %>/post">Post</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/profile/<%= username %>">Profile</a>
+                  </li>
+                  <span class="nav-item">
+                    <a class="nav-link" href="/post">Log Out</a>
+                  </span>
+                </ul>
+              </div>
+            </div>
+          </nav>
     <div class="container">
         <h3>Home</h3>
-        <a class="btn btn-success mb-3" href="/profile/<%= username %>">Profile</a>
-        <a class="btn btn-primary mb-3" href="/<%= id %>/post">Post</a>
         <form class="form-inline" action="" method="get">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="tag" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">

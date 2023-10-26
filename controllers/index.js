@@ -1,3 +1,4 @@
+const Helper = require('../helper');
 const {Post, Tag, User, PostTag, Profile} = require('../models')
 const { Op } = require("sequelize");
 
@@ -78,8 +79,14 @@ class Controller{
     static async profile(req, res) {
         try {
             const {username} = req.params
-            const data = await User.findAll({include: [{model: Post}, {model: Profile}] ,where:{username: username}})
-            res.send(data)
+            const dataProfile = await User.findAll({include: [{model: Profile},{model: Post, include: Tag}], where: {username: username}})
+            // const dataPost = await User.findAll({include:Post, where: {username: username}})
+            const data = dataProfile[0]
+            const fullName = Helper.fullName(data.Profile.firstName, data.Profile.lastName)
+            const posts = data.Posts
+            res.render('profile', {data, posts, fullName})
+            // console.log(data)
+            // res.send(data)
         } catch (error) {
             res.send(error.message)
         }
@@ -96,8 +103,10 @@ class Controller{
     }
 
     static async addProfileData(req, res) {
-        const {id} = req.session.user
+        const { id } = req.session.user;
         try {
+
+
             const {firstName, lastName, bornDate, address, image} = req.body;
             console.log(req.body,'<<<ini body')
             let img = ''
@@ -111,15 +120,16 @@ class Controller{
             await Profile.create({firstName, lastName, bornDate, address, imgProfile: img, UserId: id});
             res.redirect('/home')
             
+
         } catch (error) {
-            if (error.name === 'SequelizeValidationError') {
-                const err = error.errors.map(el => {
-                    return el.message
-                }) 
-                res.redirect(`/profileAdd?error=${err}`)
-            } else {
-                res.send(error.message)
-            }
+          if (error.name === 'SequelizeValidationError') {
+            const err = error.errors.map(el => {
+              return el.message;
+            });
+            res.redirect(`/profileAdd?error=${err}`);
+          } else {
+            res.send(error.message);
+          }
         }
     }
 
