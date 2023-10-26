@@ -57,7 +57,7 @@ class ControllerLogin{
 
             if(verifPassword) {
                 req.session.user = {id: account.id, role: account.role}
-                res.redirect("/home")
+                return res.redirect("/home")
             }else {
                 return res.redirect(`/login?msg=${msg}`);
             }

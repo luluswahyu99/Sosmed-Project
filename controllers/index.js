@@ -3,8 +3,9 @@ const Sequelize = require('sequelize')
 
 class Controller{
     static async post(req, res) {
+        const {id} = req.session.user
         try {
-            res.render('post')
+            res.render('post', {id})
         } catch (error) {
             res.send(error.message)
         }
@@ -28,8 +29,6 @@ class Controller{
 
     static async home(req, res) {
         const {id} = req.session.user
-        // console.log(res.session)
-        console.log(req.session.user)
         try {
             const data = await Post.findAll({include: Tag})
             res.render('home', {data, id})
