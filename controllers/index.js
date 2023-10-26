@@ -109,6 +109,24 @@ class Controller{
           }
         }
       }
+
+      static async checkProfile(req, res, next) {
+        const { id } = req.session.user;
+        try {
+            const dataProfile = await Profile.findOne({
+                where: {
+                    UserId: id
+                }
+            })
+            if(dataProfile){
+                next()
+            }else{
+                res.redirect("/profileAdd")
+            }
+        } catch (error) {
+            res.send(error.message);
+        }
+      }
 }
 
 module.exports = Controller

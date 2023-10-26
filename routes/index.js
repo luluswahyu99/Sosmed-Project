@@ -29,15 +29,26 @@ const isLoggedIn = (req, res, next) => {
   }
 };
 
+const isProfile = (req, res, next) => {
+  if(req.session.user.profile === null || !req.session.user.profile){
+    res.redirect("/profileAdd")
+  }else{
+    next();
+  }
+}
+
 router.use(isLoggedIn)
+
+router.get("/logout", ControllerLogin.logout)
 
 router.get("/profileAdd", Controller.addProfile)
 router.post("/profileAdd", Controller.addProfileData)
-router.get('/home', Controller.home)
-router.get('/:userId/post', Controller.post)
-router.post('/:userId/post', Controller.createPost)
-router.get('/post/:postId/like', Controller.like)
-router.get('/profile/:username', Controller.home)
+router.get('/home',isProfile , Controller.home)
+router.get('/:userId/post',isProfile , Controller.post)
+router.post('/:userId/post',isProfile , Controller.createPost)
+router.get('/post/:postId/like',isProfile , Controller.like)
+router.get('/profile/:username',isProfile , Controller.home)
+
 
 
 

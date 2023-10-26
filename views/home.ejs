@@ -12,31 +12,33 @@
 <body>
     <%- include('./partials/navbar.ejs') %>
     <div class="container">
-        
+        <div class="row row-cols-1 row-cols-md-3 g-4">
         <% data.forEach(element=> { %>
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
-                <div class="card-body">
-                    <!-- <h6>username</h6> -->
-                    <h5 class="card-title">
-                        <%= element.title %>
-                    </h5>
-                    <p class="card-text">
-                        <%= element.description %>
-                    </p>
-                    <p class="card-text">
-                        <%= element.Tags.name %>
-                    </p>
-                    <div>
+           
+                <div class="col">
+                  <div class="card h-100">
+                    <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= element.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= element.description %>
+                        </p>
+                        <p class="card-text">
+                            <%= element.Tags.name %>
+                        </p>
                         <a href="/post/<%= element.id %>/like" class="btn btn-primary">Like</a>
                         <span>
                             <%= element.like %>
                         </span>
+                        <a href="">Delete Post</a>
                     </div>
-                    <a href="">Delete Post</a>
+                  </div>
                 </div>
-            </div>
+
             <% }); %>
+            </div>
     </div>
 </body>
 </html>

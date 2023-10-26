@@ -24,10 +24,15 @@ class ControllerLogin{
         
         try {
             const dataRegister = await User.create({username, email, password})
+            const dataUser = await User.findOne({
+                include: "Profile",
+                where: {
+                    id: dataRegister.id
+                }
+            })
+                req.session.user = {id: dataUser.id, role: dataUser.role, username: dataUser.username, profile: dataUser.Profile}
+                res.redirect("/ProfileAdd")
 
-            req.session.user = {id: dataRegister.id, role: dataRegister.role, username: dataRegister.username}
-            res.redirect("/ProfileAdd")
-            
         } catch (error) {
             if(error.name === "SequelizeValidationError"){
                 const errors = error.errors.map(item => {
@@ -49,17 +54,19 @@ class ControllerLogin{
 
         try {
             const account = await User.findOne({
+                include: "Profile",
                 where: {
                     username: username,
                 }
             })
+            
             const msg = "Username atau password salah"
             if(!account) return res.redirect(`/login?msg=${msg}`);
 
             const verifPassword = bcrypt.compareSync(password, account.password)
 
             if(verifPassword) {
-                req.session.user = {id: account.id, role: account.role, username: account.username}
+                req.session.user = {id: account.id, role: account.role, username: account.username, profile: account.Profile}
                 res.redirect("/home")
             }else {
                 return res.redirect(`/login?msg=${msg}`);
@@ -69,6 +76,11 @@ class ControllerLogin{
             console.log(error);
             res.send(error.message)
         }
+    }
+
+    static logout(req, res) {
+        req.session.destroy();
+        res.redirect('/login');
     }
 }
 
