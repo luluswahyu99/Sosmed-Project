@@ -56,8 +56,8 @@ class ControllerLogin{
             const verifPassword = bcrypt.compareSync(password, account.password)
 
             if(verifPassword) {
-                req.session.user = {id: account.id, role: account.role}
-                return res.redirect("/home")
+                req.session.user = {id: account.id, role: account.role, username: account.username}
+                res.redirect("/home")
             }else {
                 return res.redirect(`/login?msg=${msg}`);
             }
