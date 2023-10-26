@@ -37,7 +37,7 @@ router.get('/home', Controller.home)
 router.get('/:userId/post', Controller.post)
 router.post('/:userId/post', Controller.createPost)
 router.get('/post/:postId/like', Controller.like)
-router.get('/profile/:username', Controller.home)
+router.get('/profile/:username', Controller.profile)
 
 
 
