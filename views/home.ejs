@@ -36,6 +36,7 @@
             </div>
           </nav>
     <div class="container">
+
         <h3>Home</h3>
         <form class="form-inline" action="" method="get">
             <div class="input-group mb-3">
@@ -44,20 +45,20 @@
             </div>
         </form>
         <% data.forEach(element=> { %>
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
-                <div class="card-body">
-                    <!-- <h6>username</h6> -->
-                    <h5 class="card-title">
-                        <%= element.title %>
-                    </h5>
-                    <p class="card-text">
-                        <%= element.description %>
-                    </p>
-                    <p class="card-text">
-                        <%= element.Tags[0].name %>
-                    </p>
-                    <div>
+           
+                <div class="col">
+                  <div class="card h-100">
+                    <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= element.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= element.description %>
+                        </p>
+                        <p class="card-text">
+                            <%= element.Tags.name %>
+                        </p>
                         <a href="/post/<%= element.id %>/like" class="btn btn-primary">Like</a>
                         <span>
                             <%= element.like %>
@@ -66,9 +67,14 @@
                     <% if (role === 'admin'){ %>
                         <a href="/post/<%= element.id %>/delete">Delete Post</a>
                     <% } %>
+                    </div>
+
+                  </div>
+
                 </div>
-            </div>
+
             <% }); %>
+            </div>
     </div>
 </body>
 </html>
