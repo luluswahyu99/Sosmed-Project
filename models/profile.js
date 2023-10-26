@@ -73,12 +73,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Masukkan foto Profile'
-        },
+          msg: 'Upload foto bang'
+        }, 
         notNull: {
-          msg: 'Masukkan foto Profile'
+          msg:'Jangan dikosongin dong fotonya'
         }
-      },
+      }
       
     },
     UserId: {

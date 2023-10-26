@@ -81,8 +81,10 @@ class Controller{
     }
 
     static async addProfileData(req, res) {
-        const {id} = req.session.user
+        const { id } = req.session.user;
         try {
+
+
             const {firstName, lastName, bornDate, address, image} = req.body;
             console.log(req.body,'<<<ini body')
             let img = ''
@@ -96,17 +98,18 @@ class Controller{
             await Profile.create({firstName, lastName, bornDate, address, imgProfile: img, UserId: id});
             res.redirect('/home')
             
+
         } catch (error) {
-            if (error.name === 'SequelizeValidationError') {
-                const err = error.errors.map(el => {
-                    return el.message
-                }) 
-                res.redirect(`/profileAdd?error=${err}`)
-            } else {
-                res.send(error.message)
-            }
+          if (error.name === 'SequelizeValidationError') {
+            const err = error.errors.map(el => {
+              return el.message;
+            });
+            res.redirect(`/profileAdd?error=${err}`);
+          } else {
+            res.send(error.message);
+          }
         }
-    }
+      }
 }
 
 module.exports = Controller

@@ -23,8 +23,11 @@ class ControllerLogin{
         const {username, email, password} = req.body;
         
         try {
-            await User.create({username, email, password})
-            res.redirect(`/login`)
+            const dataRegister = await User.create({username, email, password})
+
+            req.session.user = {id: dataRegister.id, role: dataRegister.role, username: dataRegister.username}
+            res.redirect("/ProfileAdd")
+            
         } catch (error) {
             if(error.name === "SequelizeValidationError"){
                 const errors = error.errors.map(item => {
