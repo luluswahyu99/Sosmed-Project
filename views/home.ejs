@@ -12,7 +12,9 @@
 <body>
     <%- include('./partials/navbar.ejs') %>
     <div class="container">
-        
+        <h3>Home</h3>
+        <a class="btn btn-success mb-3" href="/profile/<%= username %>">Profile</a>
+        <a class="btn btn-primary mb-3" href="/<%= id %>/post">Post</a>
         <% data.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
@@ -33,7 +35,9 @@
                             <%= element.like %>
                         </span>
                     </div>
-                    <a href="">Delete Post</a>
+                    <% if (role === 'admin'){ %>
+                        <a href="">Delete Post</a>
+                    <% } %>
                 </div>
             </div>
             <% }); %>
