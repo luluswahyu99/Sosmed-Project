@@ -8,7 +8,7 @@
         rel="stylesheet" 
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
         crossorigin="anonymous">
-    <title>Post</title>
+    <title>Add Profile</title>
 </head>
 <body>
     <%- include('./partials/navbar.ejs') %>
@@ -22,25 +22,30 @@
                 <% }) %>
             <% } %>
         </ul>
-        <form action="/<%= id %>/post" method="post" enctype="multipart/form-data">
+        <form action="/profileAdd" method="post">
+            <div class="mb-3 mt-3">
+                <label for="">firstName</label>
+                <input type="text" name="firstName" class="form-control" placeholder="firstName...">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="">lastName</label>
+                <input type="text" name="lastName" class="form-control" placeholder="lastName...">
+            </div>
             <div>
                 <label class="form-label" for="customFile">Upload Your Image</label>
                 <input type="file" name="image" class="form-control" id="customFile" />
             </div>
             <div class="mb-3 mt-3">
-                <label for="">Title</label>
-                <input type="text" name="title" class="form-control" placeholder="title...">
+                <label for="">Born Date</label>
+                <input type="date" name="bornDate" class="form-control" placeholder="bornDate...">
             </div>
             <div class="mb-3 mt-3">
-                <label for="">Descrition</label>
-                <textarea class="form-control" name="description" id="floatingTextarea"></textarea>
+                <label for="">Adress</label>
+                <textarea class="form-control" name="address" id="floatingTextarea"></textarea>
             </div>
-            <div class="mb-3 mt-3">
-                <label for="">Tag</label>
-                <input type="text" name="tag" class="form-control" placeholder="#tag">
-            </div>
-            <input type="submit" class="btn btn-primary" value="Post">
+            <input type="submit" class="btn btn-primary">
         </form>
+            
     </div>
 </body>
 </html>
