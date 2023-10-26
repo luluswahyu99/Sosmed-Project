@@ -4,25 +4,37 @@ const Sequelize = require('sequelize')
 class Controller{
     static async post(req, res) {
         try {
-            res.render('post')
+            const {error} = req.query
+            res.render('post', {error})
         } catch (error) {
             res.send(error.message)
         }
     }
 
     static async createPost(req, res) {
+        const {userId} = req.params
         try {
             const {title, description, tag} = req.body
-            const {userId} = req.params
-            const image = req.file.path
-            const img = image.split('\\')
+            let img = ''
+            if(req.file !== undefined) {
+                const image = req.file.path
+                let imgs = image.split('\\')
+                img = imgs[1]
+            }
+            let idPost = await Post.create({title, description, imgUrl: img, UserId: +userId});
             await Tag.cekTag(tag)
             const findTag = await Tag.findAll({where:{name: tag}})
-            let idPost = await Post.create({title, description, imgUrl: img[1], UserId: +userId});
             await PostTag.create({PostId: +idPost.id,  TagId: +findTag[0].id})
             res.redirect('/home')
         } catch (error) {
-            res.send(error.message)
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map(el => {
+                    return el.message
+                }) 
+                res.redirect(`/${+userId}/post?error=${err}`)
+            } else {
+                res.send(error.message)
+            }
         }
     }
 

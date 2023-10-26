@@ -24,7 +24,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Tag.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Kasih tag masse'
+        },
+        notEmpty: {
+          msg: 'Jangan dikosongin dong tag nya'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Tag',
