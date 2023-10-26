@@ -32,6 +32,11 @@
                 <form action="register" method="POST">
   
                   <!-- Email input -->
+                  <% if (error) { %>
+                   <% error.forEach(el => { %>
+                    <h6 style="color: red;"><%= el %></h6>
+                   <% }) %>
+                  <% } %>
 
                   <div class="form-outline mb-4">
                     <input type="username" id="form3Example4" class="form-control" name="username"/>
