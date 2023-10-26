@@ -45,16 +45,23 @@ class Controller{
         const {username, password} = req.body;
 
         try {
-            const verifUsername = await User.findOne({
+            const account = await User.findOne({
                 where: {
                     username: username,
                 }
             })
             const msg = "Username atau password salah"
-            if(!verifUsername) return res.redirect(`/login?msg=${msg}`);
-            const verifPassword = bcrypt.compareSync(password, verifUsername.password)
-            if(!verifPassword) return res.redirect(`/login?msg=${msg}`);
-            res.send("login berhasil")
+            if(!account) return res.redirect(`/login?msg=${msg}`);
+
+            const verifPassword = bcrypt.compareSync(password, account.password)
+
+            if(verifPassword) {
+                req.session.user = {id: account.id, role: account.role}
+                res.redirect("/test")
+            }else {
+                return res.redirect(`/login?msg=${msg}`);
+            }
+            
         } catch (error) {
             console.log(error);
             res.send(error.message)
