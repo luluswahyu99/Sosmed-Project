@@ -28,9 +28,9 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/profile/<%= username %>">Profile</a>
                   </li>
-                  <span class="nav-item">
-                    <a class="nav-link" href="/post">Log Out</a>
-                  </span>
+                  <form class="d-flex" action="/logout">
+                    <button class="btn btn-outline-success" type="submit">Logout</button>
+                  </form>
                 </ul>
               </div>
             </div>
@@ -65,13 +65,13 @@
                         </span>
                     </div>
                     <% if (role === 'admin'){ %>
-                        <a href="/post/<%= element.id %>/delete">Delete Post</a>
+                        <a href="/post/<%= element.id %>/delete" class="btn btn-danger">Delete Post</a>
                     <% } %>
                     </div>
 
                   </div>
 
-                </div>
+
 
             <% }); %>
             </div>

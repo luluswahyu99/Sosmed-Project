@@ -22,6 +22,7 @@ router.get('/login',validateLogin, ControllerLogin.loginForm);
 router.post('/login',validateLogin, ControllerLogin.loginVerification);
 
 const isLoggedIn = (req, res, next) => {
+
   if (req.session.user) {
     next();
   } else {

@@ -115,7 +115,17 @@ class Controller{
                 img = imgs[1]
             }
             // console.log(img)
+
             await Profile.create({firstName, lastName, bornDate, address, imgProfile: img, UserId: id});
+            const dataUser = await User.findOne({
+                include: "Profile",
+                where: {
+                    id: id
+                }
+            })
+            // console.log(dataUser)
+            req.session.user = {id: dataUser.id, role: dataUser.role, username: dataUser.username, profile: dataUser.Profile}
+
             res.redirect('/home')
             
 

@@ -74,9 +74,9 @@ module.exports = (sequelize, DataTypes) => {
             }
           })
           if(dataUser){
-              throw new Error(`email ${email} sudah terdaftar silahkan login`)
+              throw new Error(`email ${value} sudah terdaftar silahkan login`)
           }
-        }
+        },
       }
     },
     role: {

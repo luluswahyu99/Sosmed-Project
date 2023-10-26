@@ -21,17 +21,13 @@ class ControllerLogin{
 
     static async registerAuth(req, res){
         const {username, email, password} = req.body;
-        
+        // console.log(req.body)
         try {
             const dataRegister = await User.create({username, email, password})
-            const dataUser = await User.findOne({
-                include: "Profile",
-                where: {
-                    id: dataRegister.id
-                }
-            })
-                req.session.user = {id: dataUser.id, role: dataUser.role, username: dataUser.username, profile: dataUser.Profile}
-                res.redirect("/ProfileAdd")
+
+            req.session.user = {id: dataRegister.id, role: dataRegister.role, username: dataRegister.username}
+            // console.log(dataRegister)
+            res.redirect("/ProfileAdd")
 
         } catch (error) {
             if(error.name === "SequelizeValidationError"){

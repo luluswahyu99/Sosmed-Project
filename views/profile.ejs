@@ -28,20 +28,28 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/profile/<%= data.username %>">Profile</a>
                   </li>
-                  <span class="nav-item">
-                    <a class="nav-link" href="/post">Log Out</a>
-                  </span>
+                  <form class="d-flex" action="/logout">
+                    <button class="btn btn-outline-success" type="submit">Logout</button>
+                  </form>
                 </ul>
               </div>
             </div>
           </nav>
-        <img src="<%= data.Profile.imgProfile %>" class="rounded-circle" style="width: 150px;" alt="Avatar" />
-        <h5><%= fullName %></h5>
-        <p>Address: <%= data.Profile.address %></p>
-        <p>Day Birth: <%= data.Profile.formateDate %></p>
 
-        <a href="/profile/<%= data.username %>/edit/<%= data.Profile.id %>">Edit</a>
+          <div class="d-flex justify-content-center">
 
+            <div>
+              <img src="<%= data.Profile.imgProfile %>" class="rounded-circle" style="width: 150px;" alt="Avatar" />
+            <h5><%= fullName %></h5>
+            <p>Address: <%= data.Profile.address %></p>
+            <p>Day Birth: <%= data.Profile.formateDate %></p>
+
+            <a href="/profile/<%= data.username %>/edit/<%= data.Profile.id %>">Edit</a>
+            </div>
+            
+
+          </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
         <% posts.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
@@ -62,10 +70,11 @@
                             <%= element.like %>
                         </span>
                     </div>
-                    <a href="/post/<%= element.id %>/delete">Delete Post</a>
+                    <a href="/post/<%= element.id %>/delete" class="btn btn-danger">Delete Post</a>
                 </div>
             </div>
             <% }); %>
+          </div>
     </div>
 </body>
 </html>
