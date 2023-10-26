@@ -38,6 +38,7 @@ router.get('/:userId/post', Controller.post)
 router.post('/:userId/post', Controller.createPost)
 router.get('/post/:postId/like', Controller.like)
 router.get('/profile/:username', Controller.profile)
+router.get('/post/:postId/delete', Controller.deletePost)
 
 
 

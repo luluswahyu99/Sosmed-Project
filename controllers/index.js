@@ -1,5 +1,5 @@
 const {Post, Tag, User, PostTag, Profile} = require('../models')
-const Sequelize = require('sequelize')
+const { Op } = require("sequelize");
 
 class Controller{
     static async post(req, res) {
@@ -42,10 +42,25 @@ class Controller{
     static async home(req, res) {
         const {id, username, role} = req.session.user
         // console.log(res.session)
-        console.log(req.session.user)
+        // console.log(req.session.user)
         try {
-            const data = await Post.findAll({include: Tag})
+            const {tag} = req.query
+            let data
+            if (tag) {
+                data = await Post.findAll({include: {
+                    model: Tag,
+                    where: {
+                        name : {
+                            [Op.iLike]: `%${tag}%`
+                        }
+                    }
+                }})
+            } else {
+                data = await Post.findAll({include: Tag})
+            }
             res.render('home', {data, id, username, role})
+            // res.send(data)
+            // console.log(data)
         } catch (error) {
             res.send(error.message)
         }
@@ -105,6 +120,19 @@ class Controller{
             } else {
                 res.send(error.message)
             }
+        }
+    }
+
+    static async deletePost(req, res) {
+        try {
+            const {postId} = req.params
+            await Post.destroy({
+                where: {
+                    id: postId
+                }
+            })
+        } catch (error) {
+            res.send(error.message)
         }
     }
 }

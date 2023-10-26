@@ -15,6 +15,12 @@
         <h3>Home</h3>
         <a class="btn btn-success mb-3" href="/profile/<%= username %>">Profile</a>
         <a class="btn btn-primary mb-3" href="/<%= id %>/post">Post</a>
+        <form class="form-inline" action="" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="tag" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input type="submit" class="btn btn-primary" value="Search">
+            </div>
+        </form>
         <% data.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
@@ -27,7 +33,7 @@
                         <%= element.description %>
                     </p>
                     <p class="card-text">
-                        <%= element.Tags.name %>
+                        <%= element.Tags[0].name %>
                     </p>
                     <div>
                         <a href="/post/<%= element.id %>/like" class="btn btn-primary">Like</a>
@@ -36,7 +42,7 @@
                         </span>
                     </div>
                     <% if (role === 'admin'){ %>
-                        <a href="">Delete Post</a>
+                        <a href="/post/<%= element.id %>/delete">Delete Post</a>
                     <% } %>
                 </div>
             </div>

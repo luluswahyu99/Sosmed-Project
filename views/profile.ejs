@@ -13,14 +13,6 @@
     <div class="container">
         <h3>Home</h3>
 
-        <% if (data.Profile === null){ %>
-            <div>
-                <form action="">
-                    
-                </form>
-            </div>
-        <% } %>
-
 
         <% data.forEach(element=> { %>
             <div class="card" style="width: 20rem;">
@@ -42,7 +34,7 @@
                             <%= element.like %>
                         </span>
                     </div>
-                    <a href="">Delete Post</a>
+                    <a href="/post/<%= element.id %>/delete">Delete Post</a>
                 </div>
             </div>
             <% }); %>
