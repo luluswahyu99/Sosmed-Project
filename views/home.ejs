@@ -21,8 +21,9 @@
                 <input type="submit" class="btn btn-primary" value="Search">
             </div>
         </form>
+        
         <% data.forEach(element=> { %>
-           
+          <div class="card mb-3">
                 <div class="col">
                   <div class="card h-100">
                     <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
@@ -40,18 +41,15 @@
                         <span>
                             <%= element.like %>
                         </span>
-                    </div>
-                    <% if (role === 'admin'){ %>
-                        <a href="/post/<%= element.id %>/delete" class="btn btn-danger">Delete Post</a>
-                    <% } %>
-                    </div>
-
+                        <% if (role === 'admin'){ %>
+                          <a href="/post/<%= element.id %>/delete" class="btn btn-danger">Delete Post</a>
+                      <% } %>
+                    </div>   
                   </div>
-
-
-
-            <% }); %>
+                </div>
             </div>
+            <% }); %>
+            
     </div>
 </body>
 </html>

@@ -28,7 +28,8 @@
           </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
         <% posts.forEach(element=> { %>
-            <div class="card" style="width: 20rem;">
+          <div class="col">
+            <div class="card">
                 <img class="card-img-top" src="<%= element.imgUrl %>" alt="Card image cap">
                 <div class="card-body">
                     <!-- <h6>username</h6> -->
@@ -48,6 +49,7 @@
                         </span>
                     </div>
                     <a href="/post/<%= element.id %>/delete" class="btn btn-danger">Delete Post</a>
+                    </div>
                 </div>
             </div>
             <% }); %>
