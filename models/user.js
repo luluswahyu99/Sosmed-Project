@@ -52,6 +52,18 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: "password is required"
         },
+        uniquePassword(value) {
+          const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-]).{8,255}$/;
+        
+          if (!pattern.test(value)) {
+            throw new Error('Password must contain at least one lowercase, uppercase, number, and symbol character');
+          }
+        },
+        lengthPassword(value) {
+          if(value.length < 8){
+            throw new Error('Minimal length password 8 character');
+          }
+        },
       }
     },
     email: {

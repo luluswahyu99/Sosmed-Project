@@ -4,10 +4,10 @@ const { Op } = require("sequelize");
 
 class Controller{
     static async post(req, res) {
-        const {id} = req.session.user
+        const {id, username, role} = req.session.user
         try {
             const {error} = req.query
-            res.render('post', {error, id})
+            res.render('post', {error, id, username})
         } catch (error) {
             res.send(error.message)
         }
@@ -77,14 +77,14 @@ class Controller{
     }
 
     static async profile(req, res) {
+        const {id, username, role} = req.session.user
         try {
-            const {username} = req.params
             const dataProfile = await User.findAll({include: [{model: Profile},{model: Post, include: Tag}], where: {username: username}})
             // const dataPost = await User.findAll({include:Post, where: {username: username}})
             const data = dataProfile[0]
             const fullName = Helper.fullName(data.Profile.firstName, data.Profile.lastName)
             const posts = data.Posts
-            res.render('profile', {data, posts, fullName})
+            res.render('profile', {id, username, data, posts, fullName})
             // console.log(data)
             // res.send(data)
         } catch (error) {
@@ -93,10 +93,10 @@ class Controller{
     }
 
     static async addProfile(req, res) {
-        const {id} = req.session.user
+        const {id, username, role} = req.session.user
         try {
             const {error} = req.query
-            res.render('add-profile', {error, id})
+            res.render('add-profile', {error, id, username})
         } catch (error) {
             res.send(error.message)
         }
